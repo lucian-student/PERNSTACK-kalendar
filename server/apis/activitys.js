@@ -24,7 +24,7 @@ router.post('/create_activity', authorization, async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
-// doesnt work need to fix
+// works
 router.put('/update_activity/:id', async (req, res) => {
     try {
         const activity_id = req.params.id;
@@ -36,13 +36,12 @@ router.put('/update_activity/:id', async (req, res) => {
 
         switch (parseInt(num_of_params)) {
             case 1:
-                const result = oneParam(type, data);
+                const result = await oneParam(String(type), data);
                 if (result) {
                     res.json(result);
                 } else {
-                    res.status(500).send('Update Error');
+                    res.status(500).send('Updating Error');
                 }
-                //res.json('hello');
                 break;
             case 2:
                 break;
