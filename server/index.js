@@ -13,6 +13,7 @@ app.use(cookieParser());
 app.use(express.json());
 app.use('/users', require('./apis/users'));
 app.use('/token', require('./apis/token'));
+app.use('/activitys', require('./apis/activitys'));
 //get
 
 //post

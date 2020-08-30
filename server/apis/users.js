@@ -46,7 +46,7 @@ router.post('/register/', validation, async (req, res) => {
             //end of password hash
             const newUser = await client.query
                 ('INSERT INTO users (name,email,password) VALUES ($1,$2,$3) RETURNING *',
-                    [username, email, bcryptPassword, true]
+                    [username, email, bcryptPassword]
                 );
             //token handelingew
             const accessToken = generateAccessToken(newUser.rows[0].user_id);
