@@ -2,7 +2,6 @@ const router = require('express').Router();
 const pool = require('../configuration/db');
 const authorization = require('../midelware/authorization');
 const activityOwner = require('../midelware/activityOwner');
-const oneParam = require('../switches/activitys/oneParam');
 router.post('/create_activity', authorization, async (req, res) => {
     try {
         const { id, name, description, start_time, finish_time } = req.body;
@@ -25,44 +24,37 @@ router.post('/create_activity', authorization, async (req, res) => {
     }
 });
 // works
-router.put('/update_activity/:id', async (req, res) => {
+router.put('/update_activity/:id', [authorization, activityOwner], async (req, res) => {
     try {
         const activity_id = req.params.id;
         const data = {
             activity_id,
             ...req.body
         };
-        const { type, num_of_params } = req.body;
+        const updateActivity =
+            await pool.query('UPDATE activitys' +
+                ' SET name=$1, description=$2, start_time=$3, finish_time=$4' +
+                ' WHERE actvity_id=$5 RETURNING *',
+                [
+                    data.name,
+                    data.desc,
+                    data.start,
+                    data.finish,
+                    activity_id
+                ]);
 
-        switch (parseInt(num_of_params)) {
-            case 1:
-                const result = await oneParam(String(type), data);
-                if (result) {
-                    res.json(result);
-                } else {
-                    res.status(500).send('Updating Error');
-                }
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            default:
-                res.status(500).send('Server Error');
-        }
+        res.json(updateActivity.rows[0]);
     } catch (err) {
         console.log(err.message);
         res.status(500).send('Server Error');
     }
 });
 
-router.delete('/delete_activity/:id', [authorization, activityOwner], async (req, res) => {
+router.delete('/delete_activity/:id', async (req, res) => {
     try {
         const activity_id = req.params.id;
         const delete_activity =
-            await pool.query('DELETE FROM activitys WHERE activity_id=$1 RETURNING actvity_id',
+            await pool.query('DELETE FROM activitys WHERE activity_id=$1 RETURNING activity_id',
                 [
                     activity_id
                 ]);

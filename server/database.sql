@@ -11,8 +11,9 @@ CREATE TABLE activitys (
     user_id BIGINT NOT NULL,
     name VARCHAR(255) NOT NULL,
     description VARCHAR(255) NOT NULL,
-    start_time TIMETZ NOT NULL,
-    finish_time TIMETZ NOT NULL,
+    start_time TIME NOT NULL,
+    finish_time TIME NOT NULL,
+    creation_time TIMESTAMP DEFAULT current_timestamp,
     FOREIGN KEY (user_id)
       REFERENCES users (user_id)
         ON DELETE CASCADE
@@ -23,8 +24,8 @@ CREATE TABLE user_activitys (
     user_id BIGINT NOT NULL,
     name VARCHAR(255) NOT NULL,
     description VARCHAR(255) NOT NULL,
-    start_time TIMETZ NOT NULL,
-    finish_time TIMETZ NOT NULL,
+    start_time TIMESTAMP NOT NULL,
+    finish_time TIMESTAMP NOT NULL,
     activity_date DATE NOT NULL,
      FOREIGN KEY (user_id)
       REFERENCES users (user_id)

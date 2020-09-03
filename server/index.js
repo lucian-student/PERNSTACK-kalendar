@@ -14,6 +14,7 @@ app.use(express.json());
 app.use('/users', require('./apis/users'));
 app.use('/token', require('./apis/token'));
 app.use('/activitys', require('./apis/activitys'));
+app.use('/user_activitys', require('./apis/user_activitys'));
 //get
 
 //post
