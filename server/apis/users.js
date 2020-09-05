@@ -17,9 +17,12 @@ router.get('/me', authorization, async (req, res) => {
             return res.status(403).json('Not Authorized!');
         }
         const me = await pool.query('SELECT name, email, user_id FROM  users WHERE user_id=$1', [user]);
-
+        const current_date = await pool.query('SELECT current_date');
         if (me.rows.length === 1) {
-            return res.json(me.rows[0]);
+            return res.json({
+                ...me.rows[0],
+                current_date: new Date(current_date.rows[0].current_date)
+            });
         } else {
             res.status(403).json(' User doesnt exist!');
         }

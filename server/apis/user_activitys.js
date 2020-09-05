@@ -4,7 +4,21 @@ const authorization = require('../midelware/authorization');
 const overlapCheck = require('../midelware/overlapCheck');
 const { createFunction, deleteFunction, updateFunction } = require('../utils/saveFunctions');
 
-router.post('/save', overlapCheck, async (req, res) => {
+router.get('/day', authorization, async (req, res) => {
+    try {
+        const { date } = req.query;
+
+        const day = await pool.query('SELECT * FROM user_activitys WHERE activity_date=$1',
+            [
+                date
+            ]);
+        res.json(day.rows);
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+router.post('/save', [authorization, overlapCheck], async (req, res) => {
     const client = await pool.connect();
     try {
         // here we will store result of save
@@ -37,7 +51,7 @@ router.post('/save', overlapCheck, async (req, res) => {
             let dates = [];
             let user_ids = [];
             for (i = 0; i < req.body.create.names.length; i++) {
-                user_ids.push(1);
+                user_ids.push(req.user);
                 dates.push(date);
             }
             const createData = {
@@ -66,7 +80,7 @@ router.post('/save', overlapCheck, async (req, res) => {
 });
 
 
-router.post('/create_user_activity', overlapCheck, async (req, res) => {
+/*router.post('/create_user_activity', overlapCheck, async (req, res) => {
     try {
         // names, descs, starts, finishes , dates
         const names = req.body.names;
@@ -143,5 +157,5 @@ router.delete('/delete_user_activity', authorization, async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
-
+*/
 module.exports = router;
