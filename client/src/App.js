@@ -40,14 +40,14 @@ function App() {
   return (
     <Fragment>
       {!loading && (
-        <Router>
-          <Menu />
-          <Switch>
-            <AuthRoute exact path='/Main' component={Main} />
-            <NotAuthRoute exact path='/' component={Login} />
-            <NotAuthRoute exact path='/Register' component={Register} />
-          </Switch>
-        </Router>
+          <Router>
+            <Menu />
+            <Switch>
+              <AuthRoute exact path='/Main' component={Main} />
+              <NotAuthRoute exact path='/' component={Login} />
+              <NotAuthRoute exact path='/Register' component={Register} />
+            </Switch>
+          </Router>
       )}
     </Fragment>
   )

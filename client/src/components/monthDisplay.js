@@ -1,59 +1,76 @@
-import React, {
-    Fragment,
-    useEffect,
-    useState
-} from 'react';
-
-
-function MonthDisplay({ year }) {
-    const [months, setMonths] = useState([]);
+import React, { Fragment, useContext, useEffect, useState } from 'react';
+import { CalendarContext } from '../context/calendar';
+import Container from 'react-bootstrap/Container';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row'
+function MonthDisplay() {
+    const { selectedDate, months } = useContext(CalendarContext);
+    const [weeks, setWeeks] = useState(null);
+    // day 1,2,3,4,5,6,7
     useEffect(() => {
-        const createMonths = (leapDay) => {
-            const checkLeapDay = (leapDay) => {
-                return leapDay ? 29 : 28;
-            }
-            const calendar = [
-                { name: 'January', days: 30 },
-                { name: 'February', days: checkLeapDay(leapDay) },
-                { name: 'March', days: 30 },
-                { name: 'April', days: 30 },
-                { name: 'May', days: 30 },
-                { name: 'June', days: 30 },
-                { name: 'July', days: 30 },
-                { name: 'Aughust', days: 30 },
-                { name: 'September', days: 30 },
-                { name: 'October', days: 30 },
-                { name: 'November', days: 30 },
-                { name: 'December', days: 31 }
-            ]
-            return calendar;
+        const starting_day = new Date(`${selectedDate.year}-${selectedDate.month + 1}-01`).getDay();
+        let num_of_weeks;
+        if (months[selectedDate.month].days % 7 !== 0) {
+            num_of_weeks = (months[selectedDate.month].days / 7) + 1
+        } else {
+            num_of_weeks = months[selectedDate.month].days / 7;
         }
-        if (year % 4 === 0) {
-            if (year % 100 === 0) {
-                if (year % 400 === 0) {
-                    setMonths(createMonths(true));
-                } else {
-                    setMonths(createMonths(false));
+        let num_of_days = months[selectedDate.month].days;
+        let current_day = 1;
+        let count;
+        let temp_weeks = [];
+        for (count = 0; count < num_of_weeks - 1; count++) {
+            temp_weeks.push({ week: [0, 0, 0, 0, 0, 0, 0] });
+            if (count === 0) {
+                for (let x = starting_day; x < 7; x++) {
+                    temp_weeks[count].week[x] = current_day;
+                    current_day++;
+                    if (current_day > num_of_days) {
+                        break;
+                    }
                 }
             } else {
-                setMonths(createMonths(true));
+                for (let x = 0; x < 7; x++) {
+                    temp_weeks[count].week[x] = current_day;
+                    current_day++;
+                    if (current_day > num_of_days) {
+                        break;
+                    }
+                }
             }
-        } else {
-            setMonths(createMonths(false));
         }
-    }, [year])
-
-
-
+        setWeeks(temp_weeks);
+    }, [selectedDate, months]);
     return (
         <Fragment>
-            <ul style={{ listStyleType: 'none', padding: 0 }}>
-                {months.map(month => (
-                    <li key={month.name}>
-                        {month.name}
-                    </li>
-                ))}
-            </ul>
+            <Container>
+                <Row style={{ borderBottom: ' 2px solid' }}>
+                    <Col >Sunday</Col>
+                    <Col  >Monday</Col>
+                    <Col >Tuesday</Col>
+                    <Col >Wednesday</Col>
+                    <Col >Thursday</Col>
+                    <Col >Friday</Col>
+                    <Col >Saturday</Col>
+                </Row>
+                {weeks && (
+                    <Fragment>
+                        {weeks.map((week, index) => (
+                            <Row key={index} style={{ borderBottom: ' 2px solid' }}>
+                                {week.week.map((day, index) => (
+                                    <Col key={index} style={{ borderLeft: ' 2px solid', borderRight: ' 2px solid' }}>
+                                        {day !== 0 && (
+                                            <Fragment>
+                                                {day}
+                                            </Fragment>
+                                        )}
+                                    </Col>
+                                ))}
+                            </Row>
+                        ))}
+                    </Fragment>
+                )}
+            </Container>
         </Fragment>
     )
 }

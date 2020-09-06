@@ -1,18 +1,25 @@
 import React, { Fragment, useContext } from 'react';
-import { AuthContext } from '../context/auth';
+import { CalendarContext } from '../context/calendar';
+import MonthSelect from '../components/monthSelect';
 import MonthDisplay from '../components/monthDisplay';
+import YearSelect from '../components/yearSelect';
 function Main() {
-    const { currentUser } = useContext(AuthContext);
+    const { selectedDate, months } = useContext(CalendarContext);
     return (
         <Fragment>
             <div className='firstCenterDiv'>
                 <div className='secondCenterDiv'>
-                    <h3>{new Date(currentUser.current_date).getFullYear()}</h3>
-                    <MonthDisplay />
+                    <YearSelect />
+                    <MonthSelect properties={{
+                        year: selectedDate.year,
+                        current_month: selectedDate.month
+                    }} />
+                    {months.length === 12 && (
+                        <MonthDisplay />
+                    )}
                 </div>
             </div>
         </Fragment>
     )
 }
-
 export default Main;
