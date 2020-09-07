@@ -61,7 +61,7 @@ function MonthDisplay() {
                                     <Col key={index} style={{ borderLeft: ' 2px solid', borderRight: ' 2px solid' }}>
                                         {day !== 0 && (
                                             <Fragment>
-                                                {day}
+                                                <p className='calendarCell'>{day}</p>
                                             </Fragment>
                                         )}
                                     </Col>

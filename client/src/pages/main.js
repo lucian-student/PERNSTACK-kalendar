@@ -3,6 +3,7 @@ import { CalendarContext } from '../context/calendar';
 import MonthSelect from '../components/monthSelect';
 import MonthDisplay from '../components/monthDisplay';
 import YearSelect from '../components/yearSelect';
+import '../responsivCss/mainCss.css';
 function Main() {
     const { selectedDate, months } = useContext(CalendarContext);
     return (
