@@ -1,10 +1,21 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
+import { dayQuery } from '../queries/dayQuery';
+import '../responsivCss/dayPage.css';
 
+function DayPage(props) {
+    const date = props.match.params.date;
+    const [activitys, setActivitys] = useState([]);
 
-function DayPage() {
+    useEffect(() => {
+        dayQuery(String(date), setActivitys);
+    }, [date]);
     return (
         <Fragment>
-            day page
+            <div className='firstCenterDiv'>
+                <div className='secondCenterDiv'>
+                    {date}
+                </div>
+            </div>
         </Fragment>
     )
 }

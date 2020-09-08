@@ -21,7 +21,7 @@ function MonthSelect({ properties: { year } }) {
                 { name: 'May', days: 30 },
                 { name: 'June', days: 30 },
                 { name: 'July', days: 30 },
-                { name: 'August', days: 30 },
+                { name: 'August', days: 31 },
                 { name: 'September', days: 30 },
                 { name: 'October', days: 30 },
                 { name: 'November', days: 30 },

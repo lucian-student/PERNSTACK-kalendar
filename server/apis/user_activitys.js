@@ -4,11 +4,11 @@ const authorization = require('../midelware/authorization');
 const overlapCheck = require('../midelware/overlapCheck');
 const { createFunction, deleteFunction, updateFunction } = require('../utils/saveFunctions');
 
-router.get('/day', authorization, async (req, res) => {
+router.get('/day', async (req, res) => {
     try {
         const { date } = req.query;
 
-        const day = await pool.query('SELECT * FROM user_activitys WHERE activity_date=$1',
+        const day = await pool.query('SELECT * FROM user_activitys WHERE activity_date=$1 ORDER BY start_time asc',
             [
                 date
             ]);

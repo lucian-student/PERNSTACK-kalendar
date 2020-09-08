@@ -5,3 +5,11 @@
  .calendarCell:hover{
     transform: scale(1.1);
 }
+.dayLink{
+    text-decoration: none;
+    color:black;
+}
+.dayLink:hover{
+    text-decoration: none;
+    color:black;
+}

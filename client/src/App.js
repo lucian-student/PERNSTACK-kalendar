@@ -4,6 +4,7 @@ import Menu from './components/menu';
 import Login from './pages/login';
 import Main from './pages/main';
 import Register from './pages/register';
+import DayPage from './pages/dayPage';
 import { AuthContext } from './context/auth';
 import NotAuthRoute from './utils/notAuthRoute';
 import { setAccessToken } from './utils/accessToken';
@@ -40,14 +41,15 @@ function App() {
   return (
     <Fragment>
       {!loading && (
-          <Router>
-            <Menu />
-            <Switch>
-              <AuthRoute exact path='/Main' component={Main} />
-              <NotAuthRoute exact path='/' component={Login} />
-              <NotAuthRoute exact path='/Register' component={Register} />
-            </Switch>
-          </Router>
+        <Router>
+          <Menu />
+          <Switch>
+            <AuthRoute exact path='/Day/:date' component={DayPage} />
+            <AuthRoute exact path='/Main' component={Main} />
+            <NotAuthRoute exact path='/' component={Login} />
+            <NotAuthRoute exact path='/Register' component={Register} />
+          </Switch>
+        </Router>
       )}
     </Fragment>
   )
