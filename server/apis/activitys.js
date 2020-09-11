@@ -34,7 +34,7 @@ router.put('/update_activity/:id', [authorization, activityOwner], async (req, r
         const updateActivity =
             await pool.query('UPDATE activitys' +
                 ' SET name=$1, description=$2, start_time=$3, finish_time=$4' +
-                ' WHERE actvity_id=$5 RETURNING *',
+                ' WHERE activitys.actvity_id=$5 RETURNING *',
                 [
                     data.name,
                     data.desc,

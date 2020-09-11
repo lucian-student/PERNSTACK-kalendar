@@ -1,11 +1,11 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { dayQuery } from '../queries/dayQuery';
+import DragAndDrop from '../components/dragAndDrop';
 import '../responsivCss/dayPage.css';
 
 function DayPage(props) {
     const date = props.match.params.date;
     const [activitys, setActivitys] = useState([]);
-
     useEffect(() => {
         dayQuery(String(date), setActivitys);
     }, [date]);
@@ -13,7 +13,7 @@ function DayPage(props) {
         <Fragment>
             <div className='firstCenterDiv'>
                 <div className='secondCenterDiv'>
-                    {date}
+                    <DragAndDrop properties={{ page: 0, date }} />
                 </div>
             </div>
         </Fragment>

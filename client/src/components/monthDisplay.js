@@ -10,12 +10,6 @@ function MonthDisplay() {
     // day 1,2,3,4,5,6,7
     useEffect(() => {
         const starting_day = new Date(`${selectedDate.year}-${selectedDate.month + 1}-01`).getDay();
-        let num_of_weeks;
-        if (months[selectedDate.month].days % 7 === 0) {
-            num_of_weeks = (months[selectedDate.month].days / 7) + 1
-        } else {
-            num_of_weeks = months[selectedDate.month].days / 7;
-        }
         let num_of_days = months[selectedDate.month].days;
         let current_day = 1;
         let count = 0;
@@ -42,8 +36,6 @@ function MonthDisplay() {
             count++;
         }
         setWeeks(temp_weeks);
-        console.log(temp_weeks);
-        console.log(num_of_days);
     }, [selectedDate, months]);
     return (
         <Fragment>
