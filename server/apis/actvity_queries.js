@@ -5,10 +5,10 @@ const authorization = require('../midelware/authorization');
 // get all activitys of certain user sorted by creation date
 router.get('/user_activitys', authorization, async (req, res) => {
     try {
-        const page = req.query.page * 10;
+        const page = req.query.page * 12
         const activitys =
             await pool.query('SELECT * FROM activitys WHERE user_id=$1' +
-                ' ORDER BY creation_time asc OFFSET $2 LIMIT 10',
+                ' ORDER BY creation_time asc OFFSET $2 LIMIT 12',
                 [
                     req.user,
                     page
@@ -24,11 +24,11 @@ router.get('/search_by_name', authorization, async (req, res) => {
     try {
         const { page, name } = req.query;
         const activitys =
-            await pool.query('SELECT * FROM activitys WHERE user_id=$1 AND name=$2 OFFSET $3 LIMIT 10',
+            await pool.query('SELECT * FROM activitys WHERE user_id=$1 AND name=$2 OFFSET $3 LIMIT 12',
                 [
                     req.user,
                     name,
-                    page * 10
+                    page * 12
                 ]);
         res.json(activitys.rows);
     } catch (err) {

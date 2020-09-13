@@ -8,7 +8,8 @@ function DayColumn({ properties: { date, activitys } }) {
             <div className='titleWrapper'>
                 <h3 className='columnTitle'>{new Date(date).toDateString()}</h3>
             </div>
-            <Droppable droppableId='activitys'>
+            <Droppable droppableId='day_activitys'
+                direction='vertical'>
                 {(provided, snapshot) => (
                     <div className='columnList'
                         ref={provided.innerRef}
@@ -18,7 +19,7 @@ function DayColumn({ properties: { date, activitys } }) {
                                 ...activity,
                                 index
                             }}
-                                key={activity.activity_id} />
+                                key={activity.user_activity_id} />
                         ))}
                         {provided.placeholder}
                     </div>

@@ -1,5 +1,5 @@
 .taskColumn{
-    border-radius: 25px;
+    border-radius: 10px;
     border: 2px solid #73AD21;
     color:gray;
 }
@@ -12,4 +12,17 @@
 .columnList{
     margin-left: 10%;
     margin-right: 10%;
+}
+.activityGrid{
+    border-radius: 10px;
+    border:2px solid #73AD21;
+    color:gray;
+}
+
+.cardTitle{
+    margin-left:10%;
+    margin-top:5%;
+    display: inline-block;
+    color:black;
+    font-size: 15px;
 }

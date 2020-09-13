@@ -2,7 +2,7 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import { Draggable } from 'react-beautiful-dnd';
 function ActvityCard({ activity: {
-    activity_id,
+    user_activity_id,
     user_id,
     name,
     description,
@@ -10,19 +10,18 @@ function ActvityCard({ activity: {
     finish_time,
     index
 } }) {
-    const start = new Date(`2020-09-11 ${start_time}`);
-    const finish = new Date(`2020-09-11 ${finish_time}`);
+    const start = new Date(start_time);
+    const finish = new Date(finish_time);
     function betterTimeDisplay(time) {
-        if (time / 10 > 1) {
+        if (time / 10 >= 1) {
             return time;
         }
         return `0${time}`;
     }
     return (
-        <Draggable draggableId={activity_id} index={index}>
+        <Draggable draggableId={`user_activity${user_activity_id}`} index={index}>
             {(provided, snapshot) => (
-                <Card style={{ width: '18rem' }}
-                    ref={provided.innerRef}
+                <Card ref={provided.innerRef}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}>
                     <Card.Body>
